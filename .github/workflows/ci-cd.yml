@@ -27,11 +27,11 @@ jobs:
         with:
           context: ./backend
           push: true
-          tags: yourdockerhubusername/django-backend:latest
+          tags: prasadbhoite16/django-backend:latest
 
       - name: Build and push frontend image
         uses: docker/build-push-action@v4
         with:
           context: ./frontend
           push: true
-          tags: yourdockerhubusername/react-frontend:latest
+          tags: prasadbhoite16/react-frontend:latest
