@@ -1,22 +1,16 @@
-version: "3.9"
-
 services:
   backend:
-    build: ./backend
+    image: prasadbhoite16/django-backend:latest
     container_name: django-backend
     ports:
       - "8000:8000"
     environment:
-      - DEBUG=1               # Set Django debug mode (1 for True)
-    restart: unless-stopped
+      - DEBUG=false
 
   frontend:
-    build: ./frontend
+    image: prasadbhoite16/react-frontend:latest
     container_name: react-frontend
     ports:
       - "3000:80"
-    depends_on:
-      - backend
     environment:
-      - REACT_APP_BACKEND_URL=http://backend:8000    # Backend API URL inside Docker network
-    restart: unless-stopped
+      - VITE_API_URL=http://localhost:8000
