@@ -2,7 +2,7 @@
 
 ## 👤 Author
 
-Prasad Bhoite
+- Prasad Bhoite
 DevOps / Cloud Enthusiast
 
 ## 📌 Project Overview
