@@ -1,16 +1,33 @@
+# ---------- Stage 1: Builder ----------
+FROM python:3.11-slim AS builder
+
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /install
+
+# Copy only requirements first (cache optimization)
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir --prefix=/install \
+    -r requirements.txt
+
+
+# ---------- Stage 2: Runtime ----------
 FROM python:3.11-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
+# Create non-root user
 RUN addgroup --system app && adduser --system --group app
 
 WORKDIR /app
 
-RUN pip install --no-cache-dir \
-    django \
-    django-cors-headers
+# Copy installed dependencies from builder
+COPY --from=builder /install /usr/local
 
+# Copy application code
 COPY . .
 
 RUN chown -R app:app /app

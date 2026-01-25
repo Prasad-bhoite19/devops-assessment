@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   backend:
     image: prasadbhoite16/django-backend:latest
@@ -5,12 +7,25 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - DEBUG=false
+      DEBUG: "false"
+      ALLOWED_HOSTS: "*"
+    restart: always
+    networks:
+      - app-network
 
   frontend:
     image: prasadbhoite16/react-frontend:latest
     container_name: react-frontend
     ports:
-      - "3000:80"
+      - "80:80"
     environment:
-      - VITE_API_URL=http://localhost:8000
+      VITE_API_URL: http://django-backend:8000
+    depends_on:
+      - backend
+    restart: always
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
