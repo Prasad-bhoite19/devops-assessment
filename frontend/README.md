@@ -70,4 +70,5 @@ export default defineConfig([
     },
   },
 ])
-```
+
+// CI/CD test commit - no functional change
