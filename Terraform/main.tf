@@ -9,8 +9,6 @@ terraform {
   required_version = ">= 1.1.0"
 }
 
-
-# Security Group allowing SSH (22), HTTP (80), HTTPS (443)
 resource "aws_security_group" "devops_sg" {
   name        = "devops-assessment-sg"
   description = "Allow SSH, HTTP and HTTPS"
@@ -64,12 +62,10 @@ resource "aws_security_group" "devops_sg" {
   }
 }
 
-# Use default VPC (in eu-north-1)
 data "aws_vpc" "default" {
   default = true
 }
 
-# Fetch latest Ubuntu ARM64 AMI for eu-north-1
 data "aws_ami" "ubuntu" {
   most_recent = true
   owners      = ["099720109477"]  # Canonical
@@ -90,7 +86,6 @@ data "aws_ami" "ubuntu" {
   }
 }
 
-# EC2 instance
 resource "aws_instance" "devops_ec2" {
   ami                    = data.aws_ami.ubuntu.id
   instance_type          = var.instance_type
